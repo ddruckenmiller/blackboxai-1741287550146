@@ -196,7 +196,7 @@ function initializeAdminDashboard() {
     // Calendar initialization
     function initializeCalendar() {
         const calendarEl = document.getElementById('calendar');
-        if (!calendarEl) return;
+        if (!calendarEl) return null;
 
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
@@ -240,10 +240,18 @@ function initializeAdminDashboard() {
         return new Date(start.getTime() + durationMinutes * 60000).toISOString();
     }
 
+    // Initialize calendar when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeCalendar();
+        if (calendar) {
+            calendar.render();
+        }
+    });
+
     // Initialize lesson plan form
     const lessonPlanForm = document.getElementById('lesson-plan-form');
     if (lessonPlanForm) {
-        lessonPlanForm.addEventListener('submit', function(e) {
+        lessonPlanForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = {
                 id: Date.now(),
