@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css' rel='stylesheet' />
+    <!-- FullCalendar Bundle (includes all plugins) -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">My Learning Dashboard</h1>
+            <div class="flex items-center gap-4">
+                <span id="user-name" class="text-gray-600"></span>
+                <button id="logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- User Profile Section -->
+            <div class="md:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="text-center mb-6">
+                        <div class="w-24 h-24 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-user text-4xl text-gray-400"></i>
+                        </div>
+                        <h2 id="profile-name" class="text-xl font-semibold text-gray-800 mb-2"></h2>
+                        <p id="profile-role" class="text-gray-600"></p>
+                        <button id="change-password" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+                            <i class="fas fa-key mr-2"></i>Change Password
+                        </button>
+                    </div>
+                    <div class="border-t pt-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Upcoming Lessons</h3>
+                        <ul id="upcoming-lessons" class="space-y-2">
+                            <!-- Upcoming lessons will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="md:col-span-3">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">My Lesson Calendar</h2>
+                    <div id="calendar" class="min-h-[600px]"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white shadow-md mt-8">
+        <div class="container mx-auto px-4 py-4 text-center text-gray-600">
+            <p>&copy; 2023 Learning Dashboard. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="user.js"></script>
+</body>
+</html>
