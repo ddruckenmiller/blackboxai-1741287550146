@@ -1,0 +1,20 @@
+[Unit]
+Description=Admin Dashboard Application
+After=network.target mysql.service
+Wants=mysql.service
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/admin-dashboard/server
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=admin-dashboard
+Environment=NODE_ENV=production
+Environment=PORT=5000
+
+[Install]
+WantedBy=multi-user.target
