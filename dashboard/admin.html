@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css' rel='stylesheet' />
+    <!-- FullCalendar Bundle (includes all plugins) -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script src="admin.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <button id="menu-toggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1>Admin Dashboard</h1>
+        </div>
+        <button id="logout">Logout</button>
+    </header>
+    <div class="container">
+        <nav class="nav-expanded">
+            <ul>
+                <li><a href="#overview" class="active"><i class="fas fa-chart-bar"></i><span class="nav-text">Overview</span></a></li>
+                <li><a href="#user-management"><i class="fas fa-users"></i><span class="nav-text">User Management</span></a></li>
+                <li><a href="#system-logs"><i class="fas fa-history"></i><span class="nav-text">System Logs</span></a></li>
+                <li><a href="#lesson-plans"><i class="fas fa-book"></i><span class="nav-text">Lesson Plans</span></a></li>
+                <li><a href="#settings"><i class="fas fa-cog"></i><span class="nav-text">Settings</span></a></li>
+            </ul>
+        </nav>
+        <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Active Users</h3>
+                    <div class="card-content">
+                        <span id="active-users">0</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Total Logins</h3>
+                    <div class="card-content">
+                        <span id="total-logins">0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="user-management">
+            <h2>User Management</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Add New User</h3>
+                    <div class="card-content">
+                        <form id="add-user-form">
+                            <div class="form-group">
+                                <input type="text" id="username" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" placeholder="Email (optional)">
+                            </div>
+                            <div class="form-group">
+                                <select id="user-role" required>
+                                    <option value="editor">Editor</option>
+                                    <option value="viewer">Viewer</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="user-management">Add User</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>User List</h3>
+                    <div class="card-content">
+                        <ul id="user-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="system-logs">
+            <h2>System Logs</h2>
+            <div class="card">
+                <h3>System Activity</h3>
+                <div class="card-content">
+                    <button class="view-logs">Refresh Logs</button>
+                    <ul id="log-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="lesson-plans">
+            <h2>Lesson Plans</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Add/Edit Lesson Plan</h3>
+                    <div class="card-content">
+                        <form id="lesson-plan-form">
+                            <div class="form-group">
+                                <label for="lesson-title">Title</label>
+                                <input type="text" id="lesson-title" placeholder="Enter lesson title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lesson-description">Description</label>
+                                <textarea id="lesson-description" placeholder="Enter lesson description" rows="4"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="lesson-date">Date</label>
+                                <input type="date" id="lesson-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lesson-time">Start Time</label>
+                                <input type="time" id="lesson-time" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lesson-duration">Duration (minutes)</label>
+                                <input type="number" id="lesson-duration" min="15" step="15" value="60" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lesson-image">Lesson Image</label>
+                                <input type="file" id="lesson-image" accept="image/*">
+                                <div id="image-preview" class="image-preview"></div>
+                            </div>
+                            <div class="button-group">
+                                <button type="submit" id="lesson-submit">Add Lesson Plan</button>
+                                <button type="button" id="cancel-lesson-edit" style="display: none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Existing Lesson Plans</h3>
+                    <div class="card-content">
+                        <ul id="lesson-plan-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Lesson Calendar</h3>
+                <div class="card-content">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </section>
+        </main>
+    </div>
+
+    <!-- Assignment Modal -->
+    <div id="assignment-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Assign Users to Lesson Plan</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h4 id="modal-lesson-title"></h4>
+                <div class="assignment-form">
+                    <select id="user-assignment-select">
+                        <option value="">Select a user to assign</option>
+                    </select>
+                    <button id="assign-user-btn" class="assign-btn">Assign User</button>
+                </div>
+                <div class="assigned-users">
+                    <h4>Assigned Users</h4>
+                    <ul id="assigned-users-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2023 Admin Dashboard</p>
+    </footer>
+</body>
+</html>
